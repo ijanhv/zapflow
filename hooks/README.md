@@ -1,4 +1,4 @@
-# hooks
+# ZAPIER HOOKS
 
 To install dependencies:
 
