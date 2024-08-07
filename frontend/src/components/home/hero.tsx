@@ -28,7 +28,7 @@ export const Hero = () => {
         <div className="flex">
           <PrimaryButton
             onClick={() => {
-              router.push("/signup");
+              router.push("/auth/signup");
             }}
             size="big"
           >

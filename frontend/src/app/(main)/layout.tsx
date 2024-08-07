@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import React from "react";
+import { Appbar } from "@/components/home/app-bar";
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,10 +24,13 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
           enableSystem
+          forcedTheme="light"
           disableTransitionOnChange
         >
+          <Appbar />
           {children}
           <Toaster />
+
         </ThemeProvider>
       </body>
     </html>

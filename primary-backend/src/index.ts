@@ -12,6 +12,6 @@ app.use("/api/v1/user", userRouter)
 
 app.use("/api/v1/zap", zapRouter)
 
-app.listen(3001, () => {
-    console.log("Primary Backend listening on port 3001")
+app.listen(8001, () => {
+    console.log("Primary Backend listening on port 8001")
 })
