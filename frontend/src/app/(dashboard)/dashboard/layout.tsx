@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import React from "react";
-import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
-
+import AdminPanelLayout from "@/components/dashboard/layout";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -17,9 +16,8 @@ export default function DashboardLayout({
   return (
     <html lang="en">
       <body>
-    <AdminPanelLayout>{children}</AdminPanelLayout>
-    </body>
+        <AdminPanelLayout>{children}</AdminPanelLayout>
+      </body>
     </html>
-
   );
 }

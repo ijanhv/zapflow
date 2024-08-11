@@ -1,12 +1,18 @@
 {
   "name": ".",
   "module": "index.ts",
-  "type": "module",
   "scripts": {
     "start": "bun src/index.ts"
+
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node": "^22.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

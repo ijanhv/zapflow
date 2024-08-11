@@ -1,6 +1,9 @@
+
+
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "./config";
+
 
 export function authMiddleware(
   req: Request,
