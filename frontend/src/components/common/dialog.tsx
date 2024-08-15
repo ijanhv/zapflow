@@ -23,7 +23,7 @@ export function CommonDialog({
 }: {
   title: string;
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: (open: boolean) => void
   description: string;
   trigger: React.ReactNode;
   actionText?: string;

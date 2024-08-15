@@ -12,85 +12,69 @@ import SingleZap from "./single-zap";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Tabs from "../common/tabs";
-import { initiateOAuth } from "@/app/actions/oauth";
-import {  useRouter } from "next/navigation";
 
-const SelectedAction = ({
+import { Trash } from "lucide-react";
+import ConntectApp from "../action/connect-app";
+import { UseFormReturn } from "react-hook-form";
+import { TZapCreate } from "@/schema/zod-schema";
+import ActionComponent from "../action/enter-data";
+
+const SelectedAction =  ({
   action,
   openActionModal,
   index,
+  form
 }: {
-  action: AvailableAction;
+  action: AvailableAction | undefined;
   openActionModal: (index?: number) => void;
   index: number;
+  form: UseFormReturn<TZapCreate>
 }) => {
-    const router = useRouter()
 
-    const handleConnectApp = () => {
-        initiateOAuth(action.service).then((res) => router.push(res) )
-    }
+
+  if(!action) {
+    return <div>action not selected</div>
+  }
   const tabs = [
     {
       title: "App and event",
       content: (
         <div className="flex flex-col gap-4 w-full">
-
-    
-        <div className="w-full border rounded-md p-3 flex items-center justify-between">
-          <div className=" flex items-center gap-3">
-            <Image
-              src={action.image}
-              height={45}
-              alt="action"
-              width={45}
-              className="object-contain"
-              unoptimized
-            />
-            <p className="uppercase font-semibold">{action.service}</p>
-          </div>
-          <Button
-            onClick={() => {
-              openActionModal(index);
-            }}
-          >
-            Edit Action
-          </Button>
-        </div>
-
-            <div className="space-y-2">
-
-                    <span className="text-sm">ACTION</span>
-                    <p className="font-medium text-xl">
-                        {action.name}
-                    </p>
+          <div className="w-full border rounded-md p-3 flex items-center justify-between">
+            <div className=" flex items-center gap-3">
+              <Image
+                src={action.image}
+                height={45}
+                alt="action"
+                width={45}
+                className="object-contain"
+                unoptimized
+              />
+              <p className="uppercase font-semibold">{action.service}</p>
             </div>
+            <Button
+              onClick={() => {
+                openActionModal(index);
+              }}
+            >
+              Edit Action
+            </Button>
+          </div>
+
+          <div className="space-y-2">
+            <span className="text-sm">ACTION</span>
+            <p className="font-medium text-xl">{action.name}</p>
+          </div>
         </div>
       ),
     },
     {
       title: "Connect your app",
-      content:   <div className="w-full border rounded-md p-3 flex items-center justify-between">
-      <div className=" flex items-center gap-3">
-        <Image
-          src={action.image}
-          height={45}
-          alt="action"
-          width={45}
-          className="object-contain"
-          unoptimized
-        />
-        <p className="uppercase font-semibold">{action.service}</p>
-      </div>
-      <Button
-        onClick={handleConnectApp}
-      >
-       Connect to {action.service}
-      </Button>
-    </div>
+      content: <ConntectApp action={action} />,
     },
     {
       title: "Choose data",
-      content: <div>Choose data</div>,
+      content: <ActionComponent action={action} form={form} index={index}/>,
     },
     {
       title: "Test ",
@@ -110,38 +94,40 @@ const SelectedAction = ({
             />
           </div>
         </SheetTrigger>
-        <SheetContent side="right" className="flex flex-col justify-between h-full"> 
+        <SheetContent
+          side="right"
+          className="flex flex-col justify-between h-full"
+        >
           <div className="flex flex-col gap-3">
+            <SheetHeader>
+              <SheetTitle className="flex items-center gap-5 border-b pb-3">
+                <div className="border rounded-md p-1">
+                  <Image
+                    src={action.image}
+                    height={25}
+                    alt="action"
+                    width={25}
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+                <p>
+                  {index + 1}. {action.name}
+                </p>
 
-    
-          <SheetHeader>
-            <SheetTitle className="flex items-center gap-3 border-b pb-3">
-              <div className="border rounded-md p-1">
-                <Image
-                  src={action.image}
-                  height={25}
-                  alt="action"
-                  width={25}
-                  className="object-contain"
-                  unoptimized
+                <Trash
+               
+                  className="text-red-600 cursor-pointer"
                 />
-              </div>
-              <p>
-                {index + 1}. {action.name}
-              </p>
-            </SheetTitle>
-            <SheetClose />
-          </SheetHeader>
-          <div className="">
-            <Tabs tabs={tabs} />
-          </div>
+              </SheetTitle>
+              <SheetClose />
+            </SheetHeader>
+            <div className="">
+              <Tabs tabs={tabs} />
+            </div>
           </div>
           <SheetFooter className="sm:justify-start">
-            <Button
-  
-            className="">
-                Continue
-            </Button>
+            <Button className="">Continue</Button>
           </SheetFooter>
         </SheetContent>
       </Sheet>

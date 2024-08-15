@@ -63,18 +63,54 @@ async function main() {
         return;
       }
       const zapMetadata = zapRunDetails?.metadata;
-      if (currentAction.type.id === "email") {
+      if (currentAction.type.actionType === "email") {
+        console.log(`Sending out an email`);
         const body = parse(
           (currentAction.metadata as JsonObject)?.body as string,
           zapMetadata
         );
-        const to = parse(
-          (currentAction.metadata as JsonObject)?.email as string,
+        const emailAddress = parse(
+          (currentAction.metadata as JsonObject)?.emailAddress as string,
           zapMetadata
         );
-        console.log(`Sending out an email ${to} body is ${body}`);
+
+        const subject = parse(
+          (currentAction.metadata as JsonObject)?.subject as string,
+          zapMetadata
+        );
+        console.log(`Sending out an email ${emailAddress} body is ${body} and subject is ${subject}`);
       }
-      if (currentAction.type.id === "send-sol") {
+
+      if (currentAction.type.actionType === "add-folder") {
+        console.log("Adddinggg folder to google drive")
+
+        const folderName = parse(
+          (currentAction.metadata as JsonObject)?.folderName as string,
+          zapMetadata
+        );
+        const folderId = parse(
+          (currentAction.metadata as JsonObject)?.folderId as string,
+          zapMetadata
+        );
+        console.log(`${folderId} in ${folderName}`);
+      }
+
+      if (currentAction.type.actionType === "add-file") {
+        console.log("Adddinggg filelee to google drive")
+
+        const fileName = parse(
+          (currentAction.metadata as JsonObject)?.fileName as string,
+          zapMetadata
+        );
+        const folderId = parse(
+          (currentAction.metadata as JsonObject)?.folderId as string,
+          zapMetadata
+        );
+        console.log(`${folderId} in ${fileName}`);
+
+      }
+
+      if (currentAction.type.actionType === "send-sol") {
         const amount = parse(
           (currentAction.metadata as JsonObject)?.amount as string,
           zapMetadata

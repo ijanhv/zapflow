@@ -23,7 +23,7 @@ export const columns: ColumnDef<Zap>[] = [
               width={20}
               height={20}
               alt="zap"
-              className="w-[30px] h-[30px]"
+              className="w-[30px] h-[30px] object-contain"
               unoptimized
             />
           ))}

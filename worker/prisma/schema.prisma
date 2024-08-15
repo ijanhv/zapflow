@@ -14,21 +14,18 @@ datasource db {
 }
 
 model User {
-  id           Int               @id @default(autoincrement())
-  name         String
-  email        String
-  password     String
-  zaps         Zap[]
-  externalApps ExternalAppUser[]
+  id              Int               @id @default(autoincrement())
+  name            String
+  email           String
+  password        String
+  zaps            Zap[]
+  ExternalAppUser ExternalAppUser[]
 }
 
 model ExternalApp {
-  id           String            @id @default(uuid())
-  name         String
-  clientId     String
-  clientSecret String
-  redirectUri  String
-  users        ExternalAppUser[]
+  id    String            @id @default(uuid())
+  name  String
+  users ExternalAppUser[]
 }
 
 model ExternalAppUser {
@@ -40,6 +37,8 @@ model ExternalAppUser {
   expiresAt     DateTime
   user          User        @relation(fields: [userId], references: [id])
   externalApp   ExternalApp @relation(fields: [externalAppId], references: [id])
+
+  @@unique([userId, externalAppId])
 }
 
 model Zap {
@@ -72,10 +71,12 @@ model Action {
 }
 
 model AvailableAction {
-  id      String   @id @default(uuid())
-  name    String
-  image   String
-  actions Action[]
+  id         String   @id @default(uuid())
+  name       String
+  image      String
+  service    String // e.g., "google_drive", "google_calendar"
+  actionType String // e.g., "create_file", "create_event"
+  actions    Action[]
 }
 
 model AvailableTrigger {

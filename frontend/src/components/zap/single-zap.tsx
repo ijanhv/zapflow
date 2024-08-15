@@ -1,3 +1,4 @@
+
 import React from "react";
 
 const SingleZap = ({
@@ -6,14 +7,15 @@ const SingleZap = ({
   selected,
   configured,
 }: {
-  name: String;
+  name: string;
   index: number;
   selected: boolean;
   configured: boolean;
 }) => {
+
   return (
     <div
-      className={`border border-black py-8 px-8 rounded-lg flex w-[300px] justify-center cursor-pointer 
+      className={`border border-black py-8 px-8 rounded-lg flex w-[300px] justify-center  items-center gap-4 cursor-pointer 
     
         ${!selected && "border-dashed"}
     `}
@@ -22,6 +24,7 @@ const SingleZap = ({
         <div className="font-bold">{index}. </div>
         <div>{name}</div>
       </div>
+
     </div>
   );
 };

@@ -13,7 +13,6 @@ export const SignInSchema = z.object({
 })
 
 
-
 export const ZapCreateSchema = z.object({
     availableTriggerId: z.string(),
     triggerMetadata: z.any().optional(),

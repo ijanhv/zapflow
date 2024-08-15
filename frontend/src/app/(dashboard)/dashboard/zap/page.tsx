@@ -34,7 +34,7 @@ export default function CreateZapPage() {
   const router = useRouter();
   const { availableActions, availableTriggers } =
     useAvailableActionsAndTriggers();
-    
+
   const [selectedTrigger, setSelectedTrigger] = useState<{
     id: string;
     name: string;

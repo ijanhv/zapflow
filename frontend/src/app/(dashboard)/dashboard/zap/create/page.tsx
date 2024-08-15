@@ -1,20 +1,20 @@
 import { getAvailableActions, getAvailableTriggers } from "@/app/data/actions";
-import CreateZap from "@/components/zap/create-zap";
+import {CreateNewZap} from "@/components/zap/create-new-zap"
 import React from "react";
 
-const CreateNewZap = async () => {
+const CreateNewZapPage = async () => {
   const availableActions = await getAvailableActions();
   const availableTriggers = await getAvailableTriggers();
 
-
   return (
     <div className="h-full w-full grid place-content-center">
-      <CreateZap
-        availableTriggers={availableTriggers || []}
-        availableActions={availableActions || []}
-      />
+
+      <CreateNewZap 
+       availableTriggers={availableTriggers || []}
+       availableActions={availableActions || []}
+       />
     </div>
   );
 };
 
-export default CreateNewZap;
+export default CreateNewZapPage;

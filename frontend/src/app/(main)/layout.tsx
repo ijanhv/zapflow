@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import React from "react";
 import { Appbar } from "@/components/home/app-bar";
+import TanStackProvider from "@/provider/tanstack";
 
 
 export const metadata: Metadata = {
@@ -27,10 +28,13 @@ export default function RootLayout({
           forcedTheme="light"
           disableTransitionOnChange
         >
+          <TanStackProvider>
+
+    
           <Appbar />
           {children}
           <Toaster />
-
+          </TanStackProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 import React from "react";
 import AdminPanelLayout from "@/components/dashboard/layout";
+import TanStackProvider from "@/provider/tanstack";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -16,7 +17,9 @@ export default function DashboardLayout({
   return (
     <html lang="en">
       <body>
-        <AdminPanelLayout>{children}</AdminPanelLayout>
+        <TanStackProvider>
+          <AdminPanelLayout>{children}</AdminPanelLayout>
+        </TanStackProvider>
       </body>
     </html>
   );
