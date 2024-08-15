@@ -91,50 +91,44 @@ The services interact using REST APIs and Kafka topics, ensuring loose coupling 
 ## Database Schema
 
 <details>
-<summary><strong>Users Table</strong></summary>
+<summary><strong>User Table</strong></summary>
 
 - **Fields**:
-  - `id`: Primary key, auto-increment.
-  - `username`: Unique username for the user.
-  - `password`: Hashed password.
-  - `email`: Email address of the user.
-  - `created_at`: Timestamp when the user was created.
+  - `id`: Integer, primary key, auto-increment.
+  - `name`: String, the user's name.
+  - `email`: String, the user's email address.
+  - `password`: String, hashed password.
+  - **Relations**:
+    - `zaps`: Relation to the `Zap` table.
+    - `ExternalAppUser`: Relation to the `ExternalAppUser` table.
 
 </details>
+
 
 <details>
 <summary><strong>Zap Table</strong></summary>
 
 - **Fields**:
-  - `id`: Primary key, auto-increment.
-  - `user_id`: Foreign key referencing the `Users` table.
-  - `name`: Name of the zap.
-  - `trigger`: JSON object defining the trigger condition.
-  - `actions`: JSON array defining the actions to be executed.
-  - `created_at`: Timestamp when the zap was created.
+  - `id`: String, primary key, UUID.
+  - `triggerId`: String, foreign key referencing `Trigger`.
+  - `userId`: Integer, foreign key referencing `User`.
+  - **Relations**:
+    - `trigger`: Optional relation to the `Trigger` table.
+    - `actions`: Relation to the `Action` table.
+    - `zapRuns`: Relation to the `ZapRun` table.
+    - `user`: Relation to the `User` table.
 
 </details>
+
 
 <details>
 <summary><strong>ZapRun Table</strong></summary>
 
 - **Fields**:
-  - `id`: Primary key, auto-increment.
-  - `zap_id`: Foreign key referencing the `Zap` table.
-  - `status`: Status of the zap run (e.g., pending, completed, failed).
-  - `result`: JSON object storing the result of the zap execution.
-  - `created_at`: Timestamp when the zap run was created.
-
-</details>
-
-<details>
-<summary><strong>ZapOutbox Table</strong></summary>
-
-- **Fields**:
-  - `id`: Primary key, auto-increment.
-  - `zap_run_id`: Foreign key referencing the `ZapRun` table.
-  - `message`: JSON object containing the message to be processed by the Worker service.
-  - `created_at`: Timestamp when the outbox entry was created.
+  - `id`: String, primary key, UUID.
+  - `zapId`: String, foreign key referencing `Zap`.
+  - **Relations**:
+    - `zapRunOutbox`: Relation to the `ZapRunOutbox` table.
 
 </details>
 
@@ -158,7 +152,8 @@ Kafka is used to handle asynchronous communication between services, ensuring th
 | **Express.js**  | Web framework for building APIs                     |
 | **Nextjs**      | Frontend                                            |
 | **Kafka**       | Event streaming platform for inter-service communication |
-| **MySQL**       | Relational database for storing zaps, users, and execution logs |
+| **Prisma**           | ORM for database modeling and queries with PostgreSQL     |
+| **PostgreSQL**       | Relational database for storing users, zaps, triggers, and actions |
 | **Docker**      | Containerization for consistent environments        |
 | **Docker Compose** | Orchestrates multi-container Docker applications  |
 
