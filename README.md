@@ -1,39 +1,16 @@
-# Zapier Clone in Node.js and Express
+<div align="center">
+<!--   <img src="https://github.com/ijanhv/dockify-api/raw/main/public/logo.png" alt="Dockify Logo" width="200"/> -->
+  <h1>Zapflow</h1>
+  <p><strong>Automate multiple workflows with Zapflow!</strong></p>
+</div>
 
 ## Overview
 
 This project is a Zapier clone built using Node.js and Express with a microservices architecture. It enables users to create, manage, and execute automated workflows (zaps) that involve various actions and triggers. The architecture is designed for scalability, reliability, and maintainability, leveraging Kafka for event-driven communication between services.
 
-## Table of Contents
-
-- [Architecture](#architecture)
-  - [Microservices Overview](#microservices-overview)
-  - [Service Communication](#service-communication)
-- [Services](#services)
-  - [Primary Backend](#primary-backend)
-  - [Hooks Service](#hooks-service)
-  - [Processor Service](#processor-service)
-  - [Worker Service](#worker-service)
-- [Database Schema](#database-schema)
-  - [Users Table](#users-table)
-  - [Zap Table](#zap-table)
-  - [ZapRun Table](#zaprun-table)
-  - [ZapOutbox Table](#zapoutbox-table)
-- [Kafka Integration](#kafka-integration)
-- [Running the Project](#running-the-project)
-  - [Prerequisites](#prerequisites)
-  - [Steps](#steps)
-- [API Endpoints](#api-endpoints)
-  - [Authentication Endpoints](#authentication-endpoints)
-  - [Zap Management Endpoints](#zap-management-endpoints)
-  - [Trigger Execution Endpoints](#trigger-execution-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Architecture
 
-<details>
-<summary><strong>Microservices Overview</strong></summary>
+### Microservices Overview
 
 The application follows a microservices architecture, where each service is responsible for a specific functionality:
 
@@ -42,107 +19,76 @@ The application follows a microservices architecture, where each service is resp
 - **Processor Service**: Monitors `ZapRun` and `ZapOutbox` tables and sends messages to Kafka for further processing.
 - **Worker Service**: Consumes messages from Kafka and executes the respective actions.
 
-</details>
-
-<details>
-<summary><strong>Service Communication</strong></summary>
+### Service Communication
 
 The services interact using REST APIs and Kafka topics, ensuring loose coupling and scalability. Kafka acts as the communication backbone, facilitating event-driven processing.
 
 - **REST APIs**: Used for synchronous communication between services (e.g., user management, zap creation).
 - **Kafka**: Used for asynchronous, event-driven communication (e.g., zap execution, results processing).
 
-</details>
-
 ## Services
 
-<details>
-<summary><strong>Primary Backend</strong></summary>
+### Primary Backend
 
 - **Authentication**: Manages user sign-up, login, and session management.
 - **Zap Management**: Allows users to create, update, and delete zaps. Each zap is associated with specific triggers and actions and is stored in the `Zap` table.
 
-</details>
-
-<details>
-<summary><strong>Hooks Service</strong></summary>
+### Hooks Service
 
 - **Trigger Execution**: This service initiates the execution of a zap when a trigger condition is met.
 - **Zap Execution**: Runs the zap and logs the execution in the `ZapRun` and `ZapOutbox` tables for further processing.
 
-</details>
-
-<details>
-<summary><strong>Processor Service</strong></summary>
+### Processor Service
 
 - **Monitoring**: Continuously checks the `ZapOutbox` table for new entries indicating zaps ready for execution.
 - **Kafka Integration**: Pushes zap execution data to Kafka, making it available for the Worker service to consume.
 
-</details>
-
-<details>
-<summary><strong>Worker Service</strong></summary>
+### Worker Service
 
 - **Kafka Consumer**: Listens to the `zap-execution` topic on Kafka for zap execution instructions.
 - **Action Execution**: Executes the actions associated with a zap and records the results.
 
-</details>
-
 ## Database Schema
 
-<details>
-<summary><strong>User Table</strong></summary>
+### User Table
 
 - **Fields**:
-  - `id`: Integer, primary key, auto-increment.
-  - `name`: String, the user's name.
-  - `email`: String, the user's email address.
-  - `password`: String, hashed password.
-  - **Relations**:
-    - `zaps`: Relation to the `Zap` table.
-    - `ExternalAppUser`: Relation to the `ExternalAppUser` table.
+ - `id`: Integer, primary key, auto-increment.
+ - `name`: String, the user's name.
+ - `email`: String, the user's email address.
+ - `password`: String, hashed password.
+ - **Relations**:
+   - `zaps`: Relation to the `Zap` table.
+   - `ExternalAppUser`: Relation to the `ExternalAppUser` table.
 
-</details>
-
-
-<details>
-<summary><strong>Zap Table</strong></summary>
+### Zap Table
 
 - **Fields**:
-  - `id`: String, primary key, UUID.
-  - `triggerId`: String, foreign key referencing `Trigger`.
-  - `userId`: Integer, foreign key referencing `User`.
-  - **Relations**:
-    - `trigger`: Optional relation to the `Trigger` table.
-    - `actions`: Relation to the `Action` table.
-    - `zapRuns`: Relation to the `ZapRun` table.
-    - `user`: Relation to the `User` table.
+ - `id`: String, primary key, UUID.
+ - `triggerId`: String, foreign key referencing `Trigger`.
+ - `userId`: Integer, foreign key referencing `User`.
+ - **Relations**:
+   - `trigger`: Optional relation to the `Trigger` table.
+   - `actions`: Relation to the `Action` table.
+   - `zapRuns`: Relation to the `ZapRun` table.
+   - `user`: Relation to the `User` table.
 
-</details>
-
-
-<details>
-<summary><strong>ZapRun Table</strong></summary>
+### ZapRun Table
 
 - **Fields**:
-  - `id`: String, primary key, UUID.
-  - `zapId`: String, foreign key referencing `Zap`.
-  - **Relations**:
-    - `zapRunOutbox`: Relation to the `ZapRunOutbox` table.
-
-</details>
+ - `id`: String, primary key, UUID.
+ - `zapId`: String, foreign key referencing `Zap`.
+ - **Relations**:
+   - `zapRunOutbox`: Relation to the `ZapRunOutbox` table.
 
 ## Kafka Integration
 
 Kafka is used to handle asynchronous communication between services, ensuring that zaps are executed reliably and efficiently.
 
-<details>
-<summary><strong>Kafka Topics</strong></summary>
+### Kafka Topics
 
 - **zap-execution**: Used by the Processor service to push zap execution instructions for the Worker service to consume.
 - **zap-result**: Used by the Worker service to push the results of executed zaps.
-
-</details>
 
 ## Tech Stack
 
@@ -157,27 +103,16 @@ Kafka is used to handle asynchronous communication between services, ensuring th
 | **Docker**      | Containerization for consistent environments        |
 | **Docker Compose** | Orchestrates multi-container Docker applications  |
 
-## Architecture Diagram
-
-![Architecture Diagram](path/to/your/architecture-diagram.png)
-
-
 ## Running the Project
 
-<details>
-<summary><strong>Prerequisites</strong></summary>
+### Prerequisites
 
 - Docker and Docker Compose
 - Node.js and npm
 
-</details>
-
-<details>
-<summary><strong>Steps</strong></summary>
+### Steps
 
 1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/ijanhv/zapier.git
-   cd zapier
-
-
+  ```bash
+  git clone https://github.com/ijanhv/zapier.git
+  cd zapier
