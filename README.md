@@ -48,44 +48,10 @@ The services interact using REST APIs and Kafka topics, ensuring loose coupling 
 - **Kafka Consumer**: Listens to the `zap-execution` topic on Kafka for zap execution instructions.
 - **Action Execution**: Executes the actions associated with a zap and records the results.
 
-## Database Schema
-
-### User Table
-
-- **Fields**:
- - `id`: Integer, primary key, auto-increment.
- - `name`: String, the user's name.
- - `email`: String, the user's email address.
- - `password`: String, hashed password.
- - **Relations**:
-   - `zaps`: Relation to the `Zap` table.
-   - `ExternalAppUser`: Relation to the `ExternalAppUser` table.
-
-### Zap Table
-
-- **Fields**:
- - `id`: String, primary key, UUID.
- - `triggerId`: String, foreign key referencing `Trigger`.
- - `userId`: Integer, foreign key referencing `User`.
- - **Relations**:
-   - `trigger`: Optional relation to the `Trigger` table.
-   - `actions`: Relation to the `Action` table.
-   - `zapRuns`: Relation to the `ZapRun` table.
-   - `user`: Relation to the `User` table.
-
-### ZapRun Table
-
-- **Fields**:
- - `id`: String, primary key, UUID.
- - `zapId`: String, foreign key referencing `Zap`.
- - **Relations**:
-   - `zapRunOutbox`: Relation to the `ZapRunOutbox` table.
 
 ## Kafka Integration
 
-Kafka is used to handle asynchronous communication between services, ensuring that zaps are executed reliably and efficiently.
-
-### Kafka Topics
+Kafka is used to handle asynchronous communication between services, ensuring that the processor service is not overloaded and zaps are executed reliably and efficiently.
 
 - **zap-execution**: Used by the Processor service to push zap execution instructions for the Worker service to consume.
 - **zap-result**: Used by the Worker service to push the results of executed zaps.
@@ -109,6 +75,9 @@ Kafka is used to handle asynchronous communication between services, ensuring th
 
 - Docker and Docker Compose
 - Node.js and npm
+- Postgres 
+- Prisma
+- Next.js
 
 ### Steps
 
