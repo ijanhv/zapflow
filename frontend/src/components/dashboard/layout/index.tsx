@@ -4,7 +4,6 @@ import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/dashboard";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, LogOut, Settings, User } from "lucide-react";
 
@@ -58,7 +57,7 @@ const AdminPanelLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
           <div>
-            <SidebarLink
+            {/* <SidebarLink
               link={{
                 label: "Manu Arora",
                 href: "#",
@@ -73,7 +72,7 @@ const AdminPanelLayout = ({ children }: { children: React.ReactNode }) => {
                   />
                 ),
               }}
-            />
+            /> */}
           </div>
         </SidebarBody>
       </Sidebar>
@@ -96,7 +95,7 @@ const Logo = () => {
         animate={{ opacity: 1 }}
         className="font-medium text-black dark:text-white whitespace-pre"
       >
-        Acet Labs
+       Zapflow Dashboard
       </motion.span>
     </Link>
   );

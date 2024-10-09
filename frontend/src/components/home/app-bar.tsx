@@ -12,7 +12,7 @@ export const Appbar = () => {
       <div className="max-w-7xl mx-auto flex h-14 items-center w-full justify-between">
         <div className="flex items-center justify-between  lg:space-x-0">
           {/* <SheetMenu /> */}
-          <h1 className="font-bold">Zapier</h1>
+          <h1 className="font-bold">Zapflow</h1>
         </div>
         <div className="flex items-center gap-4">
           <div className="">

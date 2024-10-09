@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project is a Zapier clone built using Node.js and Express with a microservices architecture. It enables users to create, manage, and execute automated workflows (zaps) that involve various actions and triggers. The architecture is designed for scalability, reliability, and maintainability, leveraging Kafka for event-driven communication between services.
+This project is a Zapier clone built using Node.js and Express with a microservices architecture. It enables users to create, manage, and execute automated workflows (zaps) that involve various actions and triggers. The architecture is designed for scalability, reliability, and maintain ability, leveraging Kafka for event-driven communication between services.
 
 ## Architecture
 
@@ -25,6 +25,15 @@ The services interact using REST APIs and Kafka topics, ensuring loose coupling 
 
 - **REST APIs**: Used for synchronous communication between services (e.g., user management, zap creation).
 - **Kafka**: Used for asynchronous, event-driven communication (e.g., zap execution, results processing).
+
+### Transactional Outbox Pattern
+This project implements the transactional outbox pattern to ensure reliable message delivery between services. The outbox pattern helps maintain data consistency across microservices by:
+
+- Storing outgoing messages in a local "outbox" table within the same transaction as the business logic.
+Using a separate process (the Processor Service) to read from the outbox table and publish messages to Kafka.
+Ensuring that messages are only marked as processed after successful publication to Kafka.
+
+- This approach guarantees that messages are not lost due to network issues or service failures, providing at-least-once delivery semantics.
 
 ## Services
 
